@@ -12,12 +12,8 @@ async function main() {
 	const simpleStorage = (await SimpleStorageFactory.deploy()) as SimpleStorage;
 	await simpleStorage.waitForDeployment();
 
-	// Log the contract address
 	const contractAddress = await simpleStorage.getAddress();
 	console.log('Contract deployed to address:', contractAddress);
-
-	const filePath = path.join(__dirname, '../deployments', 'SimpleStorageAddress.txt');
-	fs.writeFileSync(filePath, contractAddress);
 
 	const deploymentsDir = path.join(__dirname, '../deployments');
 	if (!fs.existsSync(deploymentsDir)) {
