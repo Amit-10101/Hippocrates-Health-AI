@@ -9,6 +9,6 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true
 	},
-	"include": ["src/**/*", "./hardhat/typechain-types"],
+	"include": ["src/**/*", "types/**/*", "./hardhat/typechain-types"],
 	"exclude": ["node_modules", "**/*.spec.ts"]
 }
