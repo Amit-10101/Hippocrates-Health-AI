@@ -10,7 +10,7 @@ const ALCHEMY_API_URI = process.env.ALCHEMY_API_URI as string;
 const SEPOLIA_PRIVATE_KEY = process.env.SEPOLIA_PRIVATE_KEY as string;
 
 const config: HardhatUserConfig = {
-	solidity: '0.8.9',
+	solidity: '0.8.20',
 	networks: {
 		hardhat: {},
 		sepolia: {

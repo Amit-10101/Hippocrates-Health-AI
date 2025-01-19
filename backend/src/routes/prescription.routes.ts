@@ -3,7 +3,9 @@ import authenticate from '../middlewares/authentication.middleware';
 import authorize from '../middlewares/authorization.middleware';
 import {
 	createPrescription,
+	downloadPrescriptionPDF,
 	getPrescription,
+	searchPrescriptions,
 	updatePrescription,
 } from '../controllers/prescription.controller';
 import validate from '../middlewares/validation.middleware';
@@ -18,6 +20,7 @@ router.post(
 	validate(createPrescriptionSchema),
 	createPrescription
 );
+router.get('/search', authenticate, authorize(['Doctor', 'Patient']), searchPrescriptions);
 router.put(
 	'/:id',
 	authenticate,
@@ -26,5 +29,11 @@ router.put(
 	updatePrescription
 );
 router.get('/:id', authenticate, authorize(['Doctor', 'Patient']), getPrescription);
+router.get(
+	'/:id/download/pdf',
+	authenticate,
+	authorize(['Doctor', 'Patient']),
+	downloadPrescriptionPDF
+);
 
 export default router;

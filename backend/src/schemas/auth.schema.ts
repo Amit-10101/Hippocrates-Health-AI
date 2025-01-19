@@ -22,6 +22,10 @@ export const registerSchema = z.object({
 			message: 'Password must contain at least one special character.',
 		}),
 	role: z.enum(['Doctor', 'Patient']),
+	ethereumAddress: z
+		.string()
+		.regex(/^0x[a-fA-F0-9]{40}$/, { message: 'Invalid Ethereum address' })
+		.optional(),
 });
 
 export const loginSchema = z.object({

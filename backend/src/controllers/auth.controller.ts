@@ -9,11 +9,16 @@ import { sendErrorResponse, sendSuccessResponse } from '../utils/response';
 
 export const register = async (req: Request, res: Response) => {
 	try {
-		const { firstName, lastName, email, password, role } = req.body;
+		const { firstName, lastName, email, password, role, ethereumAddress } = req.body;
 
 		const user = await User.findOne({ email });
 		if (user) {
 			sendErrorResponse(res, 400, 'User already exists with this email address.');
+			return;
+		}
+
+		if (role === 'Patient' && !ethereumAddress) {
+			sendErrorResponse(res, 400, 'Ethereum address is required for patients.');
 			return;
 		}
 
@@ -24,6 +29,7 @@ export const register = async (req: Request, res: Response) => {
 			email,
 			password: hashedPassword,
 			role,
+			...(role === 'Patient' && { ethereumAddress }),
 		});
 
 		// Generate OTP

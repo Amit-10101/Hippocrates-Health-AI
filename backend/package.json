@@ -4,21 +4,27 @@
 	"description": "Hippocrates Health AI is a backend application designed to manage e-prescriptions and facilitate NFT generation for healthcare purposes. The application is built using TypeScript, Express, MongoDB, and Mongoose, adhering to modern development practices.",
 	"main": "index.ts",
 	"scripts": {
-		"dev": "nodemon --files src/index.ts",
+		"dev": "node --loader ts-node/esm src/index.ts",
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
+	"type": "module",
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
+		"@helia/unixfs": "^4.0.2",
 		"@openzeppelin/contracts": "^5.1.0",
+		"@tensorflow/tfjs": "^4.22.0",
 		"bcryptjs": "^2.4.3",
 		"dotenv": "^16.4.7",
 		"express": "^4.21.2",
+		"helia": "^5.2.0",
 		"jsonwebtoken": "^9.0.2",
 		"mongoose": "^8.9.2",
 		"morgan": "^1.10.0",
+		"multiformats": "^13.3.1",
 		"nodemailer": "^6.9.16",
+		"pdfkit": "^0.16.0",
 		"winston": "^3.17.0",
 		"zod": "^3.24.1"
 	},
@@ -33,10 +39,12 @@
 		"@types/morgan": "^1.9.9",
 		"@types/node": "^22.10.2",
 		"@types/nodemailer": "^6.4.17",
+		"@types/pdfkit": "^0.13.8",
 		"ethers": "^6.13.4",
 		"hardhat": "^2.22.17",
 		"nodemon": "^3.1.9",
 		"ts-node-dev": "^2.0.0",
+		"tsx": "^4.19.2",
 		"typescript": "^5.7.2"
 	}
 }

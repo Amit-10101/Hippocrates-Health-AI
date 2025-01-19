@@ -1,10 +1,14 @@
 import { Schema, model, Document } from 'mongoose';
+import { IUser } from './user.model';
 
-interface IPrescription extends Document {
-	doctorId: Schema.Types.ObjectId;
-	patientId: Schema.Types.ObjectId;
+export interface IPrescription extends Document {
+	_id: Schema.Types.ObjectId;
+	doctorId: Schema.Types.ObjectId | IUser;
+	patientId: Schema.Types.ObjectId | IUser;
 	details: string;
 	metadataUri: string;
+	nftId: number;
+	transactionHash: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -25,6 +29,14 @@ const prescriptionSchema = new Schema<IPrescription>({
 		required: true,
 	},
 	metadataUri: {
+		type: String,
+		required: true,
+	},
+	nftId: {
+		type: Number,
+		required: true,
+	},
+	transactionHash: {
 		type: String,
 		required: true,
 	},

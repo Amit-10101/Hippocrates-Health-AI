@@ -1,11 +1,13 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface IUser extends Document {
+export interface IUser extends Document {
+	_id: Schema.Types.ObjectId;
 	firstName: string;
 	lastName: string;
 	email: string;
 	password: string;
 	role: 'Doctor' | 'Patient';
+	ethereumAddress?: string;
 	isVerified: boolean;
 	otp?: string;
 	otpExpires?: Date;
@@ -36,6 +38,9 @@ const userSchema = new Schema<IUser>(
 			type: String,
 			required: true,
 			enum: ['Doctor', 'Patient'],
+		},
+		ethereumAddress: {
+			type: String,
 		},
 		isVerified: {
 			type: Boolean,

@@ -1,30 +1,34 @@
 import { ethers, run, network } from 'hardhat';
-import { SimpleStorage__factory, SimpleStorage } from '../typechain-types';
+import { PrescriptionNFT__factory, PrescriptionNFT } from '../typechain-types';
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 async function main() {
-	const SimpleStorageFactory = (await ethers.getContractFactory(
-		'SimpleStorage'
-	)) as unknown as SimpleStorage__factory;
-	console.log('Deploying contract...');
+	const PrescriptionNFTFactory = (await ethers.getContractFactory(
+		'PrescriptionNFT'
+	)) as unknown as PrescriptionNFT__factory;
+	console.log('Deploying PrescriptionNFT contract...');
 
-	const simpleStorage = (await SimpleStorageFactory.deploy()) as SimpleStorage;
-	await simpleStorage.waitForDeployment();
+	const prescriptionNFT = (await PrescriptionNFTFactory.deploy()) as PrescriptionNFT;
+	await prescriptionNFT.waitForDeployment();
 
-	const contractAddress = await simpleStorage.getAddress();
+	const contractAddress = await prescriptionNFT.getAddress();
 	console.log('Contract deployed to address:', contractAddress);
+
+	const __filename = fileURLToPath(import.meta.url);
+	const __dirname = path.dirname(__filename);
 
 	const deploymentsDir = path.join(__dirname, '../deployments');
 	if (!fs.existsSync(deploymentsDir)) {
 		fs.mkdirSync(deploymentsDir);
 	}
 	fs.writeFileSync(
-		path.join(deploymentsDir, 'SimpleStorageAddress.json'),
+		path.join(deploymentsDir, 'PrescriptionNFTAddress.json'),
 		JSON.stringify({ address: contractAddress }, null, 2)
 	);
 
-	console.log('Transaction hash:', simpleStorage.deploymentTransaction()?.hash);
+	console.log('Transaction hash:', prescriptionNFT.deploymentTransaction()?.hash);
 }
 
 main()
