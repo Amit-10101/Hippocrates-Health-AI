@@ -4,7 +4,9 @@ import 'dotenv/config';
 import connectDB from './config/db';
 import authRoutes from './routes/auth.routes';
 import prescriptionRoutes from './routes/prescription.routes';
+import messageRoutes from './routes/message.routes';
 import loggerMiddleware from './middlewares/logger.middleware';
+import { loadModels } from './utils/aiModal';
 
 const app = express();
 const HOST = process.env.HOSTNAME;
@@ -15,9 +17,14 @@ app.use(loggerMiddleware);
 
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/prescription', prescriptionRoutes);
+app.use('/api/v1/messages', messageRoutes);
 
 connectDB().catch((err) => {
 	console.error('Database connection error:', err);
+});
+
+loadModels().catch((err) => {
+	console.error('AI model loading error:', err);
 });
 
 app.get('/test', (req, res) => {

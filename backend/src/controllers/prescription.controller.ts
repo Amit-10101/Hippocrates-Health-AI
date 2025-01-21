@@ -5,6 +5,7 @@ import { sendErrorResponse, sendSuccessResponse } from '../utils/response';
 import { uploadToIPFS } from '../utils/ipfs';
 import { mintNFT } from '../utils/nft';
 import { generatePrescriptionPDF } from '../utils/pdf';
+import { sendEmail } from '../utils/email';
 
 export const createPrescription = async (req: Request, res: Response) => {
 	try {
@@ -49,6 +50,12 @@ export const createPrescription = async (req: Request, res: Response) => {
 			nftId,
 			transactionHash,
 		});
+
+		await sendEmail(
+			patient.email,
+			'New Prescription Available',
+			'You have a new prescription available in your account. Login to see the details.'
+		);
 
 		sendSuccessResponse(res, 201, 'Prescription created and NFT minted successfully', {
 			prescription: newPrescription,
@@ -119,16 +126,21 @@ export const updatePrescription = async (req: Request, res: Response) => {
 			tokenURI: metadataUri,
 		});
 
-		const updatedPrescription = await Prescription.updateOne(
-			{ _id: id },
+		const updatedPrescription = await Prescription.findOneAndUpdate(
+			{ _id: id, patientId: patientId },
 			{
-				doctorId,
-				patientId,
 				details,
 				metadataUri,
 				nftId,
 				transactionHash,
-			}
+			},
+			{ new: true }
+		);
+
+		await sendEmail(
+			patient.email,
+			'A Updated Prescription Available',
+			'You have an updated prescription available in your account. Login to see the details.'
 		);
 
 		sendSuccessResponse(res, 201, 'Prescription updated and NFT minted successfully', {
